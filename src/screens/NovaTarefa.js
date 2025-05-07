@@ -1,79 +1,75 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Touchable, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function NovaTarefa() {
-    return(
+
+    const navigation = useNavigation();
+
+    return (
         <View>
             <View style={styles.cabecalho}>
-             <Text style={styles.titulo}>Adicionar Tarefa </Text>
+                <Text style={styles.titulo}>Adicionar Tarefa</Text>
             </View>
-
-
-           
             <View style={styles.body}>
-                <Text style={styles.texto}>
-                    Nome da Tarefa:
-                </Text>
-
-                <TextInput
-                    style={styles.input}
-                    autoCapitalize="none"
-                />
-                
-                <Text style={styles.texto2}>
-                    Categoria da Tarefa:
-                </Text>
+                <Text style={styles.texto}>Nome da Tarefa:</Text>
+                <TextInput style={styles.textInput} />
 
 
-
-                <Picker style={styles.drop}>
-                <Picker.Item label="Selecione a categoria" value={null} />
-                <Picker.Item label="Estudo" value="estudo" />
-                <Picker.Item label="Trabalho" value="trabalho" />
-                <Picker.Item label="Prova" value="prova" />
-                <Picker.Item label="Reunião" value="reunião" />
-                <Picker.Item label="Aula" value="aula" />
+                <Text style={styles.texto}>Categotia da Tarefa:</Text>
+                <Picker style={styles.textInput}>
+                    <Picker.Item label="Estudo" value="estudo" />
+                    <Picker.Item label="Trabalho" value="trabalho" />
+                    <Picker.Item label="Reunião" value="reuniao" />
+                    <Picker.Item label="Prova" value="prova" />
+                    <Picker.Item label="Aula" value="aula" />
                 </Picker>
 
 
-                <Text style={styles.texto3}>
-                    Descrição da Tarefa:
-                </Text>
-
+                <Text style={styles.texto}>Descrição da Tarefa:</Text>
                 <TextInput
-                    style={styles.input3}
-                    autoCapitalize="none"
-                    placeholder="Value"
+                    style={styles.textInput}
+                    placeholder='Value'
+                    multiline
+                    numberOfLines={3}
                 />
 
-                <TextInput
-                    style={styles.input4}
-                    autoCapitalize="none"
-                    placeholder="mm/dd/yyyy"
-                />
 
-             
+                <TextInput
+                    style={styles.textDate}
+                    placeholder='dd/mm/yyyy'
+                />
+                <View style={styles.containerBotao}>
+                    <TouchableOpacity style={styles.botao}>
+                        <Text style={styles.botaoTexto}>Cancel</Text>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity style={styles.botao} onPress={() => navigation.goBack()}>
+                        <Text style={styles.botaoTexto}>Ok</Text>
+                    </TouchableOpacity>
+                </View>
+
+
             </View>
-
-            
-         
-        </View>
-
+        </View >
     )
 }
 
-const styles = StyleSheet.create({
-    container:{
-        flex: 1 
-    },
 
-    cabecalho:{
-        backgroundColor:'blue',
-        width:'100%',
-        height:60,
-        flexDirection:'row',
-        justifyContent: 'center',
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    cabecalho: {
+        backgroundColor: 'blue',
+        width: '100%',
+        height: 60,
+        flexDirection: 'row',
+        justifyContent: "center",
         alignItems: 'center'
     },
     titulo: {
@@ -82,65 +78,40 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    input:{
-        borderWidth:1,
-        borderRadius: 8,
-        backgroundColor: 'white',
-        padding: 12,
-        borderColor:'#ccc',
-        
-    },
-    body:{
+    body: {
         padding: 15
-
     },
-
-    texto:{
-        marginBottom:5
-
+    texto: {
+        marginBottom: 5
     },
-
-    texto2:{
-    marginBottom:5,
-       marginTop: 30
-    },
-
-    drop:{
-        borderWidth:1,
-        borderRadius: 8,
-        backgroundColor: 'white',
+    textInput: {
+        borderWidth: 1,
+        borderRadius: 10,
         borderColor: '#ccc',
-        padding: 12,   
-    },
-
-    texto3:{
-        marginBottom:5,
-        marginTop: 30
-     },
-
-     input3:{
-        color: '#ccc',
-        borderColor: '#ccc',
-        borderWidth:1,
-        borderRadius: 8,
+        padding: 10,
         backgroundColor: 'white',
-        padding: 12,
-        height: 100, 
-        
+        marginBottom: 15
     },
-
-    input4:{
-        borderColor: '#ccc',
-        borderWidth:1,
-        borderRadius: 8,
-        backgroundColor: 'white',
-        padding: 50,
-        margin:40,
-        marginTop: 100
-        
+    textDate: {
+        height: 60,
+        borderWidth: 3,
+        borderColor: 'indigo',
+        borderRadius: 5,
+        margin: 40,
+        marginVertical: 30,
+        padding: 15,
+        backgroundColor: 'white'
+    },
+    containerBotao: {
+        flexDirection: 'row',
+        justifyContent: 'end'
+    },
+    botao: {
+        padding: 15
+    },
+    botaoTexto: {
+        color: 'indigo'
     }
-   
-
 });
 
 
