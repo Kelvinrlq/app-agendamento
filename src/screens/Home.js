@@ -1,11 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import TarefaItem from '../components/TarefaItem';
-import { getData} from '../storage/async-storage'
+import { getData} from '../storage/async-storage';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+export default function Home() {
+
+    const navigation = useNavigation();
 
 
-export default function Home(){
 
+    const [ tasks, setTask ] = useState(null)
+
+    // Executa ao carregar a página
+    useEffect(async () => {
+        const data = await getData();
+        setTask(data);
+    }, []);
 
     console.log(tasks)
 
@@ -16,28 +27,25 @@ export default function Home(){
                 <View style={styles.icone}></View>
             </View>
 
-
             <ScrollView style={styles.body}>
                 {
-                    tasks !=  null && tasks.map((item) =>{
-                        return(
+                    tasks && tasks.map((item) => {
+                        return (
                             <TarefaItem
-                            nome={item.data}
+                            nome={item.nome}
                             status={item.status}
                             data={item.data}
                             categoria={item.categoria}
-                        />
-
+                            />
                         )
                     })
                 }
             </ScrollView>
 
-
             <TouchableOpacity
                  style={styles.botaoAdicionar}
                   onPress={() => {
-                     alert("hehe")
+                    navigation.navigate("NovaTarefa")
                     }}
                 >
                 <Text style={styles.botaoMais}>+</Text>
@@ -45,7 +53,6 @@ export default function Home(){
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -95,5 +102,3 @@ const styles = StyleSheet.create({
         marginTop: -12
     }
 });
-
-
