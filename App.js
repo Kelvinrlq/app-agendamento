@@ -16,7 +16,7 @@ const RootSack = createNativeStackNavigator({
     },
 });
 
-const Navigation = createStaticNavigation(ReactootStack);
+const Navigation = createStaticNavigation(RootSack);
 export default function App() {
     return <Navigation />;
   }
