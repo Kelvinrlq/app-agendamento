@@ -103,64 +103,6 @@ const styles = StyleSheet.create({
         marginTop: -12
     }
 });
-}
-
-const styles = StyleSheet.create({
-    container:{
-        flex: 1 
-    },
-
-    cabecalho:{
-        backgroundColor:'blue',
-        width:'100%',
-        height:60,
-        flexDirection:'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    titulo: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-
-    icone: {
-        backgroundColor: 'gray',
-        width:40,
-        height:40,
-        borderRadius:20,
-        position:'absolute',
-        right: 15
-    },
-
-    body:{
-        flex:1,
-    },
-
-    botaoAdicionar:{
-        backgroundColor: 'blue',
-        width:50,
-        height:50,
-        borderRadius:30,
-        position:'absolute',
-        bottom: 15,
-        right: 15,
-        justifyContent: 'center',
-        alignItems:'center'
-        
-
-    },
-
-    mais:{
-        color:'white',
-        fontSize: 50,
-        fontWeight:'bold',
-        textAlign: 'center',
-        marginTop: -12
 
 
-    }
-    
 
-});
