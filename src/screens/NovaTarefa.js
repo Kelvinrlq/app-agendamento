@@ -3,6 +3,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { addData } from '../storage/async-storage';
+import MaskInput from 'react-native-mask-input';
 
 
 export default function NovaTarefa() {
@@ -19,27 +20,27 @@ export default function NovaTarefa() {
             nome: nome,
             categoria:categotia,
             data: data,
-            descricao: descricao
+            descricao: descricao,
+            status: 'a fazer'
         };
-        if (nome == '') {
+
+        if (nome.trim() == '') {
             alert("Campo nome não preenchido")
         }
 
-        else if(descricao == '') {
+        else if(descricao.trim() == '') {
             alert("Campo descrição não preenchido")
-
-
+        }
+        else if (data.trim() == ''){
+            alert("Campo data não preenchido")
+    
         }
         else {
             await addData(tarefa)
             alert("Nova tarefa Cadastrada!")
             navigation.navigate('Home')
         }
-
-        
-
     }
-
 
     return (
         <View>
@@ -48,8 +49,7 @@ export default function NovaTarefa() {
             </View>
             <View style={styles.body}>
                 <Text style={styles.texto}>Nome da Tarefa:</Text>
-                <TextInput style={styles.textInput} value= {nome} onChangeText={texto => setNome()}/>
-
+                <TextInput style={styles.textInput} value= {nome} onChangeText={texto => setNome(texto)}/>
 
                 <Text style={styles.texto}>Categotia da Tarefa:</Text>
                 <Picker style={styles.textInput} selectedValue={categotia} onValueChange={texto => setCategotia(texto)}>
@@ -60,19 +60,18 @@ export default function NovaTarefa() {
                     <Picker.Item label="Aula" value="aula" />
                 </Picker>
 
-
                 <Text style={styles.texto}>Descrição da Tarefa:</Text>
                 <TextInput
-                    style={styles.textInput} value= {descricao} onChangeText={texto => setDescricao()}
+                    style={styles.textInput} value= {descricao} onChangeText={texto => setDescricao(texto)}
                     placeholder='Value'
                     multiline
                     numberOfLines={3}
                 />
 
-
-                <TextInput
-                    style={styles.textDate} value= {data} onChangeText={texto => setData()}
+                <MaskInput
+                    style={styles.textDate} value= {data} onChangeText={texto => setData(texto)}
                     placeholder='dd/mm/yyyy'
+                    mask={[ /\d/, /\d/,'/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
                 />
                 <View style={styles.containerBotao}>
                     <TouchableOpacity style={styles.botao}>
@@ -87,15 +86,10 @@ export default function NovaTarefa() {
                         <Text style={styles.botaoTexto}>Ok</Text>
                     </TouchableOpacity>
                 </View>
-
-
             </View>
         </View >
     )
 }
-
-
-
 
 const styles = StyleSheet.create({
     container: {
