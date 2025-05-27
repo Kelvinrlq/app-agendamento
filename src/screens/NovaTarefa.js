@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity  } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -6,50 +6,53 @@ import { addData } from '../storage/async-storage';
 import MaskInput from 'react-native-mask-input';
 
 
+
 export default function NovaTarefa() {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation ();
 
-    const  [ nome, setNome, ] = useState('')
-    const  [ categotia, setCategotia, ] = useState('')
-    const  [ descricao, setDescricao, ] = useState('')
-    const  [ data, setData, ] = useState('')
-   
-    const handleSave = async () => {
+    const [ nome, setNome] = useState('')
+    const [categotia, setCategotia] = useState('')
+    const [descricao, setDescricao] = useState('')
+    const [data,setData] = useState('')
+
+    const handleSave = async () =>{
         const tarefa = {
             nome: nome,
-            categoria:categotia,
+            categoria: categotia,
             data: data,
             descricao: descricao,
-            status: 'a fazer'
+            status: 'A fazer'
+
         };
 
-        if (nome.trim() == '') {
+        if (nome == ''){
             alert("Campo nome não preenchido")
         }
-
-        else if(descricao.trim() == '') {
+        else if (descricao == ''){
             alert("Campo descrição não preenchido")
         }
-        else if (data.trim() == ''){
+
+        else if (data == ''){
             alert("Campo data não preenchido")
-    
         }
-        else {
-            await addData(tarefa)
-            alert("Nova tarefa Cadastrada!")
-            navigation.navigate('Home')
+
+        else{
+         await addData(tarefa)
+        alert("Nova tarefa cadastrada!")
+        navigation.navigate('Home')
         }
     }
 
+
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.cabecalho}>
                 <Text style={styles.titulo}>Adicionar Tarefa</Text>
             </View>
-            <View style={styles.body}>
+            <ScrollView style={styles.body}>
                 <Text style={styles.texto}>Nome da Tarefa:</Text>
-                <TextInput style={styles.textInput} value= {nome} onChangeText={texto => setNome(texto)}/>
+                <TextInput style={styles.textInput} value={nome} onChangeText={texto => setNome(texto)} />
 
                 <Text style={styles.texto}>Categotia da Tarefa:</Text>
                 <Picker style={styles.textInput} selectedValue={categotia} onValueChange={texto => setCategotia(texto)}>
@@ -62,34 +65,34 @@ export default function NovaTarefa() {
 
                 <Text style={styles.texto}>Descrição da Tarefa:</Text>
                 <TextInput
-                    style={styles.textInput} value= {descricao} onChangeText={texto => setDescricao(texto)}
+                    style={styles.textInput}
                     placeholder='Value'
                     multiline
                     numberOfLines={3}
+                    value={descricao} onChangeText={texto => setDescricao(texto)}
                 />
 
                 <MaskInput
-                    style={styles.textDate} value= {data} onChangeText={texto => setData(texto)}
+                    style={styles.textDate}
                     placeholder='dd/mm/yyyy'
-                    mask={[ /\d/, /\d/,'/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                    value={data} onChangeText={texto => setData(texto)}
+                    mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
                 />
                 <View style={styles.containerBotao}>
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.botaoTexto}>Cancel</Text>
+                    <TouchableOpacity style={styles.botao} onPress={()=> navigation.goBack()}>
+                    <Text style={styles.botaoTexto} >Cancel</Text>
                     </TouchableOpacity>
-
-
-                    <TouchableOpacity style={styles.botao} onPress={() => {
-                        handleSave()
-                    }}>    
-                       
-                        <Text style={styles.botaoTexto}>Ok</Text>
+                    <TouchableOpacity style={styles.botao}  onPress={()=>{
+                      handleSave ()
+                    }}>
+                    <Text style={styles.botaoTexto} >Ok</Text>
                     </TouchableOpacity>
-                </View>
-            </View>
-        </View >
+                 </View>
+            </ScrollView>
+        </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -135,14 +138,13 @@ const styles = StyleSheet.create({
     },
     containerBotao: {
         flexDirection: 'row',
-        justifyContent: 'end'
+        justifyContent:'end'
     },
     botao: {
         padding: 15
     },
     botaoTexto: {
-        color: 'indigo'
+        color:'indigo'
+
     }
-});
-
-
+})
