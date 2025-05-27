@@ -11,12 +11,22 @@ export default function Home() {
 
 
     const [ tasks, setTask ] = useState(null)
+    const [ isLoaded, setIsloaded] = useState(true)
 
-    // Executa ao carregar a página
-    useEffect(async () => {
+    const loadData = async () => {
         const data = await getData();
         setTask(data);
-    }, []);
+        setIsloaded(!isLoaded)
+
+    
+    }
+
+    // Executa ao carregar a página
+    useEffect(() => {
+        if(isLoaded){
+            loadData();
+        }
+    }, [isLoaded]);
 
     console.log(tasks)
 
@@ -29,14 +39,15 @@ export default function Home() {
 
             <ScrollView style={styles.body}>
                 {
-                    tasks && tasks.map((item) => {
+                    tasks && tasks.map((item, index) => {
                         return (
                             <TarefaItem
-                            nome={item.nome}
-                            status={item.status}
-                            data={item.data}
-                            categoria={item.categoria}
-                            />
+                                key={index}
+                                nome={item.nome}
+                                status={item.status}
+                                data={item.data}
+                                categoria={item.categoria}
+                                />
                         )
                     })
                 }
@@ -51,6 +62,7 @@ export default function Home() {
                 <Text style={styles.botaoMais}>+</Text>
             </TouchableOpacity>
         </View>
+
     );
 }
 
@@ -102,3 +114,6 @@ const styles = StyleSheet.create({
         marginTop: -12
     }
 });
+
+
+

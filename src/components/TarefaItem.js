@@ -1,20 +1,20 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from "react-native";
 
-export default function TarefaItem(props) {
+export default function TarefaItem(props){
 
     let statusColor = 'orange';
 
-    if (props.status == 'concluído') {
-        statusColor = 'green';
+    if (props.status == 'concluído'){
+        statusColor ='green';
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}>{props.nome}</Text>
+            <Text style={styles.titulo}>{props.nome} </Text>
             <Text style={styles.data}>{props.data}</Text>
-            <Text style={styles.categoria}>Categoria - {props.categoria}</Text>
-            <View style={{ ...styles.status, backgroundColor: statusColor }}>
-                <Text style={styles.textoStatus}>{props.status}</Text>
+            <Text style={styles.categoria}>categoria - {props.categoria}</Text>
+            <View style={{...styles.status,backgroundColor: statusColor}}>
+                <Text style={styles.textoStts}>{props.status}</Text>
             </View>
         </View>
     )
@@ -24,32 +24,40 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: 100,
-        padding: 15,
-        borderBottomWidth: 1,
-        borderColor: '#ccc'
+        margin: 15,
+        borderBottomWidth: 1
     },
-    titulo: {
+
+    titulo:{
         fontWeight: 'bold',
         fontSize: 18
+
+
     },
+
     data: {
         marginTop: 5,
         marginLeft: 3.5
     },
-    categoria: {
+
+    categoria:{
         marginTop: 8
     },
-    status: {
+
+    status:{
         backgroundColor: 'orange',
         width: 150,
         height: 30,
         borderRadius: 30,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems:'center',
         position: 'absolute',
         left: 150
+   
+
     },
-    textoStatus: {
+
+    textoStts:{
         color: 'white'
     }
 });
