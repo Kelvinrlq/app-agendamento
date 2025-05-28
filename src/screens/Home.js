@@ -1,34 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import TarefaItem from '../components/TarefaItem';
-import { getData} from '../storage/async-storage';
+import { getData } from '../storage/async-storage';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+
 
 export default function Home() {
 
     const navigation = useNavigation();
 
+    const [ tasks, setTasks ] = useState(null)
+    const [ isLoaded, setIsLoaded ] = useState(true)
 
-
-    const [ tasks, setTask ] = useState(null)
-    const [ isLoaded, setIsloaded] = useState(true)
 
     const loadData = async () => {
         const data = await getData();
-        setTask(data);
-        setIsloaded(!isLoaded)
-
-    
+        setTasks(data);
+        setIsLoaded(!isLoaded)
     }
-
-    // Executa ao carregar a página
     useEffect(() => {
         if(isLoaded){
             loadData();
         }
     }, [isLoaded]);
-
-    console.log(tasks)
 
     return (
         <View style={styles.container}>
@@ -36,33 +30,30 @@ export default function Home() {
                 <Text style={styles.titulo}>ABRIL / 2025</Text>
                 <View style={styles.icone}></View>
             </View>
-
             <ScrollView style={styles.body}>
                 {
                     tasks && tasks.map((item, index) => {
                         return (
                             <TarefaItem
-                                key={index}
-                                nome={item.nome}
-                                status={item.status}
-                                data={item.data}
-                                categoria={item.categoria}
-                                />
+                                key={index} 
+                                task={item}
+                                setIsLoaded={setIsLoaded}
+                            />
                         )
                     })
                 }
             </ScrollView>
 
-            <TouchableOpacity
-                 style={styles.botaoAdicionar}
-                  onPress={() => {
-                    navigation.navigate("NovaTarefa")
-                    }}
-                >
-                <Text style={styles.botaoMais}>+</Text>
-            </TouchableOpacity>
-        </View>
-
+            <TouchableOpacity 
+                style={styles.botaoAdicionar}
+                onPress={()=>{
+                   navigation.navigate("NovaTarefa")
+                }}
+            >
+                    <Text style={styles.textoBotaoAdicionar}>+</Text>
+                </TouchableOpacity>
+            </View>
+       
     );
 }
 
@@ -108,12 +99,7 @@ const styles = StyleSheet.create({
     },
     botaoMais: {
         fontSize: 40,
-        color:'white',
+        color: 'white',
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: -12
     }
-});
-
-
-
+});     
